@@ -14,7 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+//@RequiredArgsConstructor // TAMBÉM pode usar isso e RETIRAR o Constructor, mas vai fazer para TODOS os Atributos "final" !!
 public class ProductController {
+    private static final String PRODUCT_NOT_FOUND_MESSAGE = "Product not found";
     private final ProductRepository productRepository;
 
     // NÃO é necessário usar o "@Autowired" aqui porque tem APENAS UM ÚNICO Constructor, se houvessem mais seria
@@ -46,9 +48,9 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
-
+        
         return ResponseEntity.status(HttpStatus.OK).body(productFound.get());
     }
 
@@ -59,7 +61,7 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
 
         ProductModel productModel = productFound.get();
@@ -75,7 +77,7 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
 
         productRepository.deleteById(id);
