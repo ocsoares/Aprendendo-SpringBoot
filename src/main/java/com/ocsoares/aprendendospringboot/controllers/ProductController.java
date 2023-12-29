@@ -7,12 +7,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class ProductController {
@@ -39,5 +38,17 @@ public class ProductController {
         List<ProductModel> productModelList = productRepository.findAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(productModelList);
+    }
+
+    // Usando "ResponseEntity<Object>" porque o "product" pode NÃO Existir!!!
+    @GetMapping("product/{id}")
+    public ResponseEntity<Object> getOne(@PathVariable(value = "id") UUID id) {
+        Optional<ProductModel> productFound = productRepository.findById(id);
+
+        if (productFound.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(productFound.get());
     }
 }
