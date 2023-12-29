@@ -51,4 +51,22 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.OK).body(productFound.get());
     }
+
+    @PatchMapping("product/{id}")
+    public ResponseEntity<Object> updateOne(
+            @PathVariable(value = "id") UUID id, @RequestBody @Valid ProductRecordDTO productRecordDTO
+    ) {
+        Optional<ProductModel> productFound = productRepository.findById(id);
+
+        if (productFound.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+        }
+
+        ProductModel productModel = productFound.get();
+        BeanUtils.copyProperties(productRecordDTO, productModel); // ATUALIZA o "product" com as NOVAS Informações!!!
+
+        ProductModel updatedProduct = productRepository.save(productModel); // SALVA esse Novo "product" ATUALIZADO!!!
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
+    }
 }
