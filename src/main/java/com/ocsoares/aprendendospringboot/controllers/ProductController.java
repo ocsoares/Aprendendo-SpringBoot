@@ -83,6 +83,6 @@ public class ProductController {
 
         productRepository.deleteById(id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
