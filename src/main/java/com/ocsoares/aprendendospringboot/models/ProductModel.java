@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TB_PRODUCTS")
-@Data
+@Data // GERA AUTOMATICAMENTE os Getter e Setter, toString, hashCode e etc!!!
 public class ProductModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L; // Número de Controle de VERSÃO da Classe!!
