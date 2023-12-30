@@ -48,9 +48,9 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
-        
+
         // Esse é a MESMA COISA que usar com o "status(HttpStatus.OK).body(productFound.get()) !!!
         return ResponseEntity.ok(productFound.get());
     }
@@ -62,7 +62,7 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
 
         ProductModel productModel = productFound.get();
@@ -78,7 +78,7 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
 
         productRepository.deleteById(id);
