@@ -51,7 +51,8 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(PRODUCT_NOT_FOUND_MESSAGE);
         }
         
-        return ResponseEntity.status(HttpStatus.OK).body(productFound.get());
+        // Esse é a MESMA COISA que usar com o "status(HttpStatus.OK).body(productFound.get()) !!!
+        return ResponseEntity.ok(productFound.get());
     }
 
     @PatchMapping("product/{id}")
