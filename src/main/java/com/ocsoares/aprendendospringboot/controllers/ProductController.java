@@ -6,6 +6,8 @@ import com.ocsoares.aprendendospringboot.models.ProductModel;
 import com.ocsoares.aprendendospringboot.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +46,15 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productModelList);
     }
 
+    @GetMapping("product/page") // Obviamente, o "/page" na Rota só foi pra DIFERENCIAR da Rota "product" já Existente!
+    public ResponseEntity<Page<ProductModel>> getAllPaginable(Pageable pageable) {
+
+        Page<ProductModel> pageProductModelList = productRepository.findAll(pageable);
+
+        // Esse é a MESMA COISA que usar com o "status(HttpStatus.OK).body(pageProductModelList) !!!
+        return ResponseEntity.ok(pageProductModelList);
+    }
+
     // Usando "ResponseEntity<Object>" porque o "product" pode NÃO Existir!!!
     @GetMapping("product/{id}")
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") UUID id) {
@@ -53,7 +64,6 @@ public class ProductController {
             throw new PageNotFoundException();
         }
 
-        // Esse é a MESMA COISA que usar com o "status(HttpStatus.OK).body(productFound.get()) !!!
         return ResponseEntity.ok(productFound.get());
     }
 
