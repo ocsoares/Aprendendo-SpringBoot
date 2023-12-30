@@ -1,6 +1,7 @@
 package com.ocsoares.aprendendospringboot.controllers;
 
 import com.ocsoares.aprendendospringboot.dtos.ProductRecordDTO;
+import com.ocsoares.aprendendospringboot.exceptions.PageNotFoundException;
 import com.ocsoares.aprendendospringboot.models.ProductModel;
 import com.ocsoares.aprendendospringboot.repositories.ProductRepository;
 import jakarta.validation.Valid;
@@ -48,7 +49,7 @@ public class ProductController {
         Optional<ProductModel> productFound = productRepository.findById(id);
 
         if (productFound.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PRODUCT_NOT_FOUND_MESSAGE);
+            throw new PageNotFoundException();
         }
 
         // Esse é a MESMA COISA que usar com o "status(HttpStatus.OK).body(productFound.get()) !!!
