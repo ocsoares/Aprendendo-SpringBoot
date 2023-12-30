@@ -1,4 +1,4 @@
-package com.ocsoares.aprendendospringboot.client;
+package com.ocsoares.aprendendospringboot.client.restTemplate;
 
 import com.ocsoares.aprendendospringboot.models.ProductModel;
 import lombok.extern.log4j.Log4j2;
