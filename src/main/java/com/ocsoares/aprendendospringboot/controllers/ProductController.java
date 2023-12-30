@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class ProductController {
 
     // A annotation "@Valid" serve para ATIVAR a VALIDAÇÃO do DTO, como "@NotBlank" e "@NotNull", por exemplo !!!
     @PostMapping("product")
+    @Transactional // "@Transaction" irá ser DESFEITO (Rollback) a Ação feita no Banco de Dados se houver Algum ERRO!
     public ResponseEntity<ProductModel> save(@RequestBody @Valid ProductRecordDTO productRecordDTO) {
         ProductModel productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDTO, productModel); // TRANSFORMA o "productRecordDTO" em "productModel" !
@@ -56,6 +58,7 @@ public class ProductController {
     }
 
     @PatchMapping("product/{id}")
+    @Transactional
     public ResponseEntity<Object> updateOne(
             @PathVariable(value = "id") UUID id, @RequestBody @Valid ProductRecordDTO productRecordDTO
     ) {
