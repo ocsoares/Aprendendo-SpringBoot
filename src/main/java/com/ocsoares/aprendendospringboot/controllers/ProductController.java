@@ -50,7 +50,7 @@ public class ProductController {
     public ResponseEntity<Page<ProductModel>> getAllPaginable(Pageable pageable) {
 
         Page<ProductModel> pageProductModelList = productRepository.findAll(pageable);
-
+        
         // Esse é a MESMA COISA que usar com o "status(HttpStatus.OK).body(pageProductModelList) !!!
         return ResponseEntity.ok(pageProductModelList);
     }
